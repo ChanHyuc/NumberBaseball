@@ -1,7 +1,21 @@
 private var life = 10
 private var inputMenu = ""
 
-private func gameMenu() {
+private func makeRandomNumber() -> [Int] {
+    var numberSet = Set<Int>()
+    
+    while numberSet.count < 3 {
+        let randomNumber = Int.random(in: 1...9)
+        numberSet.insert(randomNumber)
+    }
+    
+    let numberArr = Array(numberSet)
+    
+    return numberArr
+}
+
+
+private func printGameMenu() {
     while inputMenu != "2" {
         print("1. 게임 시작")
         print("2. 게임 종료")
@@ -14,4 +28,4 @@ private func gameMenu() {
     }
 }
 
-gameMenu()
+printGameMenu()
