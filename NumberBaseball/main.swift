@@ -1,15 +1,29 @@
-private func makeRandomNumber() -> [Int] {
-    var numberSet = Set<Int>()
+private func printGameMenu() {
+    var inputMenu = ""
     
-    while numberSet.count < 3 {
-        let randomNumber = Int.random(in: 1...9)
-        numberSet.insert(randomNumber)
+    while inputMenu != "2" {
+        print("1. 게임 시작")
+        print("2. 게임 종료")
+        print("원하는 기능을 선택해 주세요", terminator: " : ")
+        
+        guard let input = readLine() else { return }
+        inputMenu = input
+        
+        if inputMenu == "1" {
+            playGame()
+        }
+        
     }
-    return Array(numberSet)
+}
+
+private func makeRandomNumber() -> [Int] {
+    let shuffleNumber = Array(1...9).shuffled()
+    return Array(shuffleNumber.prefix(3))
 }
 
 private func playGame() {
     let numberArr = makeRandomNumber()
+    print(numberArr)
     var life = 10
     
     print("게임 시작!")
@@ -48,25 +62,6 @@ private func playGame() {
     }
     
     print("컴퓨터의 승리!")
-}
-
-
-private func printGameMenu() {
-    var inputMenu = ""
-    
-    while inputMenu != "2" {
-        print("1. 게임 시작")
-        print("2. 게임 종료")
-        print("원하는 기능을 선택해 주세요", terminator: " : ")
-        
-        guard let input = readLine() else { return }
-        inputMenu = input
-        
-        if inputMenu == "1" {
-            playGame()
-        }
-        
-    }
 }
 
 printGameMenu()
