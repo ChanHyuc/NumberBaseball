@@ -1,16 +1,19 @@
+import Foundation
+
 private func printGameMenu() {
-    var inputMenu = ""
-    
-    while inputMenu != "2" {
+    while true {
         print("1. 게임 시작")
         print("2. 게임 종료")
         print("원하는 기능을 선택해 주세요", terminator: " : ")
         
-        guard let input = readLine() else { return }
-        inputMenu = input
+        guard let inputMenu = readLine()?.trimmingCharacters(in: .whitespaces) else { return }
         
         if inputMenu == "1" {
             playGame()
+        } else if inputMenu == "2" {
+            break;
+        } else {
+            print("입력이 잘못 되었습니다.")
         }
         
     }
@@ -23,7 +26,6 @@ private func makeRandomNumber() -> [Int] {
 
 private func playGame() {
     let numberArr = makeRandomNumber()
-    print(numberArr)
     var life = 10
     
     print("게임 시작!")
@@ -39,7 +41,7 @@ private func playGame() {
         let inputNumbers = input.split(separator: " ").compactMap({ Int($0) })
         
         if inputNumbers.count != 3 {
-            print("입력이 잘못 되었습니다")
+            print("입력이 잘못 되었습니다 \n")
             continue
         }
         
@@ -52,7 +54,7 @@ private func playGame() {
         }
         
         if strike == 3 {
-            print("사용자의 승리!!!")
+            print("사용자의 승리!!! \n")
             return
         }
         
@@ -61,7 +63,7 @@ private func playGame() {
         print("남은 기회 : \(life)")
     }
     
-    print("컴퓨터의 승리!")
+    print("컴퓨터의 승리! \n")
 }
 
 printGameMenu()
