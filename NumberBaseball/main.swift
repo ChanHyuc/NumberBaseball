@@ -24,6 +24,22 @@ private func makeRandomNumber() -> [Int] {
     return Array(shuffleNumber.prefix(3))
 }
 
+private func getInput() -> [Int]? {
+    print("숫자 3개를 띄어쓰기로 구분하여 입력해주세요.")
+    print("중복 숫자는 허용하지 않습니다.")
+    print("입력 숫자", terminator: " : ")
+    
+    guard let input = readLine() else { return nil }
+    let inputNumbers = input.split(separator: " ").compactMap({ Int($0) })
+    
+    if inputNumbers.count != 3 || Set(inputNumbers).count != 3 || inputNumbers.contains(where: { $0 < 1 || $0 > 9 }) {
+        print("입력이 잘못 되었습니다 \n")
+        return nil
+    }
+    
+    return inputNumbers
+}
+
 private func playGame() {
     let numberArr = makeRandomNumber()
     var life = 10
@@ -31,19 +47,10 @@ private func playGame() {
     print("게임 시작!")
     
     while life != 0 {
+        guard let input = getInput() else { return }
+        
         var strike = 0, ball = 0
         
-        print("숫자 3개를 띄어쓰기로 구분하여 입력해주세요.")
-        print("중복 숫자는 허용하지 않습니다.")
-        print("입력 숫자", terminator: " : ")
-        
-        guard let input = readLine() else { return }
-        let inputNumbers = input.split(separator: " ").compactMap({ Int($0) })
-        
-        if inputNumbers.count != 3 || Set(inputNumbers).count != 3 || inputNumbers.contains(where: { $0 < 1 || $0 > 9 }) {
-            print("입력이 잘못 되었습니다 \n")
-            continue
-        }
         
         for i in 0...2 {
             if numberArr[i] == inputNumbers[i] {
