@@ -40,6 +40,20 @@ private func getInput() -> [Int]? {
     return inputNumbers
 }
 
+private func excuteGameLogic(numberArr: [Int], inputNumbers: [Int]) -> (Int, Int) {
+    var strike = 0, ball = 0
+    
+    for i in 0...2 {
+        if numberArr[i] == inputNumbers[i] {
+            strike += 1
+        } else if numberArr.contains(inputNumbers[i]) {
+            ball += 1
+        }
+    }
+    
+    return (strike, ball)
+}
+
 private func playGame() {
     let numberArr = makeRandomNumber()
     var life = 10
@@ -47,18 +61,9 @@ private func playGame() {
     print("게임 시작!")
     
     while life != 0 {
-        guard let input = getInput() else { return }
+        guard let userInput = getInput() else { return }
         
-        var strike = 0, ball = 0
-        
-        
-        for i in 0...2 {
-            if numberArr[i] == inputNumbers[i] {
-                strike += 1
-            } else if numberArr.contains(inputNumbers[i]) {
-                ball += 1
-            }
-        }
+        let (strike, ball) = excuteGameLogic(numberArr: numberArr, inputNumbers: userInput)
         
         if strike == 3 {
             print("사용자의 승리!!! \n")
@@ -70,7 +75,7 @@ private func playGame() {
         print("남은 기회 : \(life)")
     }
     
-    print("컴퓨터의 승리! \n")
+    print("컴퓨터의 승리! 정답은 \(numberArr) 입니다!\n")
 }
 
 printGameMenu()
