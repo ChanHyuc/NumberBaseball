@@ -1,6 +1,6 @@
 import Foundation
 
-private func printGameMenu() {
+private func selectGameMenu() {
     while true {
         print("1. 게임 시작")
         print("2. 게임 종료")
@@ -8,12 +8,13 @@ private func printGameMenu() {
         
         guard let inputMenu = readLine()?.trimmingCharacters(in: .whitespaces) else { return }
         
-        if inputMenu == "1" {
+        switch inputMenu {
+        case "1":
             playGame()
-        } else if inputMenu == "2" {
-            break;
-        } else {
-            print("입력이 잘못 되었습니다.")
+        case "2":
+            break
+        default:
+            print("입력이 잘못되었습니다")
         }
         
     }
@@ -30,23 +31,28 @@ private func getInput() -> [Int]? {
     print("입력 숫자", terminator: " : ")
     
     guard let input = readLine() else { return nil }
-    let inputNumbers = input.split(separator: " ").compactMap({ Int($0) })
     
-    if inputNumbers.count != 3 || Set(inputNumbers).count != 3 || inputNumbers.contains(where: { $0 < 1 || $0 > 9 }) {
-        print("입력이 잘못 되었습니다 \n")
+    if input.components(separatedBy: " ").joined().range(of: "^[1-9]{3,3}$", options: .regularExpression) == nil {
+        print("\n입력이 잘못 되었습니다 \n")
         return nil
     }
     
-    return inputNumbers
+//    let inputNumbers = input.split(separator: " ").compactMap({ Int($0) })
+//    if inputNumbers.count != 3 || Set(inputNumbers).count != 3 || inputNumbers.contains(where: { $0 < 1 || $0 > 9 }) {
+//        print("\n입력이 잘못 되었습니다 \n")
+//        return nil
+//    }
+    
+    return input.split(separator: " ").compactMap({ Int($0) })
 }
 
 private func excuteGameLogic(numberArr: [Int], inputNumbers: [Int]) -> (Int, Int) {
     var strike = 0, ball = 0
     
-    for i in 0...2 {
-        if numberArr[i] == inputNumbers[i] {
+    for index in 0...2 {
+        if numberArr[index] == inputNumbers[index] {
             strike += 1
-        } else if numberArr.contains(inputNumbers[i]) {
+        } else if numberArr.contains(inputNumbers[index]) {
             ball += 1
         }
     }
@@ -61,7 +67,7 @@ private func playGame() {
     print("게임 시작!")
     
     while life != 0 {
-        guard let userInput = getInput() else { return }
+        guard let userInput = getInput() else { continue }
         
         let (strike, ball) = excuteGameLogic(numberArr: numberArr, inputNumbers: userInput)
         
@@ -78,4 +84,4 @@ private func playGame() {
     print("컴퓨터의 승리! 정답은 \(numberArr) 입니다!\n")
 }
 
-printGameMenu()
+selectGameMenu()
