@@ -37,11 +37,6 @@ private func getInput() -> [Int]? {
         return nil
     }
     
-//    let inputNumbers = input.split(separator: " ").compactMap({ Int($0) })
-//    if inputNumbers.count != 3 || Set(inputNumbers).count != 3 || inputNumbers.contains(where: { $0 < 1 || $0 > 9 }) {
-//        print("\n입력이 잘못 되었습니다 \n")
-//        return nil
-//    }
     
     return input.split(separator: " ").compactMap({ Int($0) })
 }
